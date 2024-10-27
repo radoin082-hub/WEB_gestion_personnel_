@@ -1,0 +1,10 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --B1: #1a659e; /* Define a color variable */
+    --B2: #004e89;
+    --W1: #efefd0; /* Define another color variable */
+}
