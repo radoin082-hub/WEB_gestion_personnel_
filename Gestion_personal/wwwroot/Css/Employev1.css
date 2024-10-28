@@ -1,0 +1,60 @@
+﻿.panel-employe{
+margin-left:15%;
+margin-top:6%;
+}
+
+.option-employe{
+    display:flex;
+    justify-content:space-between;
+   
+}
+
+.search-employe {
+    width: 25%;
+    border: 2px solid Var(--B1);
+    border-radius: 3px;
+}
+ 
+
+    .search-employe i {
+        position: relative;
+        left: 430px;
+        top: 160px;
+        color: Var(--B1);
+    }
+
+.form-control, .btn-outline-secondary {
+    border-color: Var(--B1);
+    border: 1px solid Var(--B1);
+}
+.form-control, .btn-outline-secondary::placeholder {
+    font-weight:600;
+
+}
+    .option-employe .btn-employe {
+    padding-right:5%;
+    width:55%;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .option-employe .btn-employe button {
+        border-radius:4px;
+        border:1px solid Var(--B1);
+        padding:1%;
+        color:white;
+        background-color:Var(--B1);
+        font-weight:600;
+    }
+
+.date-input{
+    width:25%;
+    border:1px solid Var(--B1);
+    margin-left:2%;
+    padding:0.5rem;
+    border-radius:3px;
+}
+
+#option-pointage{
+    width:100%;
+}
