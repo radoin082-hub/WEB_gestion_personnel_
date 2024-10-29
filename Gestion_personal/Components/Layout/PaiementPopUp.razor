@@ -1,0 +1,111 @@
+﻿@page "/ff"
+
+<div class="paiement-pop-up">
+
+	<div class="close-btn"> 
+		<button>X</button>
+	</div>
+
+	<div class="pop-up-content">
+		<div class="panel-titel">
+			<p>Ajouter Employeur Paiement</p>
+		</div>
+	
+	<div class="line1">
+	
+			<EditForm Model=@video>
+				<label class="pos-label">Employe</label>
+				<InputSelect @bind-Value=@video.DisplayId>
+					@if (video.DisplayId is null)
+					{
+						<option value="">none</option>
+					}
+					else
+					{
+						<option value=@selectedDisplay?.Id>@selectedDisplay?.Name</option>
+					}
+					@foreach (var display in unSelectedDisplays)
+					{
+						<option value=@display.Id>@display.Name</option>
+					}
+					@if (video.DisplayId is not null)
+					{
+						<option value="">none</option>
+					}
+				</InputSelect>
+			</EditForm>
+	</div>
+		<div class="line2">
+
+		<div class="img-profile">
+			<img src="Images/engineer.png"/>
+		</div>
+		<div class="info-profile">
+				<label>Nom et Prenom</label>
+				<input type="text" />
+				<label>Fonction</label>
+				<input type="text" />
+		</div>
+		</div>
+	
+		<div class="line3">
+		
+			<EditForm Model=@video>
+				<label>Type de Paiement</label>
+				<InputSelect @bind-Value=@video.DisplayId>
+					@if (video.DisplayId is null)
+					{
+						<option value="">none</option>
+					}
+					else
+					{
+						<option value=@selectedDisplay?.Id>@selectedDisplay?.Name</option>
+					}
+					@foreach (var display in unSelectedDisplays)
+					{
+						<option value=@display.Id>@display.Name</option>
+					}
+					@if (video.DisplayId is not null)
+					{
+						<option value="">none</option>
+					}
+				</InputSelect>
+			</EditForm>
+
+
+		<label>Salaire</label>
+		<input  type="text"/>
+		</div>
+	</div>
+</div>
+
+
+@code {
+	private Video video = new Video();
+	private IEnumerable<Display> displays = Enumerable.Empty<Display>();
+
+	private IEnumerable<Display> unSelectedDisplays =>
+		displays.Where(display => display.Id != video.DisplayId);
+
+	Display? selectedDisplay => video.DisplayId.HasValue ?
+							displays.First(d => d.Id == this.video.DisplayId) :
+							default(Display);
+
+	protected override void OnInitialized()
+	{
+		displays = Enumerable.Range(0, 10)
+			.Select(i => new Display { Id = i, Name = $"Name{i}" });
+	}
+
+	public class Display
+	{
+		public int Id { get; set; }
+
+		public string? Name { get; set; }
+	}
+
+	public class Video
+	{
+		public int? DisplayId { get; set; }
+	}
+}
