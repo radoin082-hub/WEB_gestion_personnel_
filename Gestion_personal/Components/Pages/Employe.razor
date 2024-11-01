@@ -1,71 +1,102 @@
 ﻿@page "/employe"
 @rendermode InteractiveServer
+@using Gestion_personal.Components.Layout
+
+@using Services.Interfaces
+@using Domains.Model.Employee
+@inject IEmployeService EmployeService
+@inject IModalService Modal
+
 
 <div class="panel-employe">
 
-
     <div class="option-employe">
-
-
         <div class="input-group w-25">
             <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </div>
 
         <div class="btn-employe">
-
             <button>Modifier Fonction</button>
             <button>Ajouter Fonction</button>
-            <button>Ajouter Employe</button>
-
+            <button>Ajouter Fonction</button>
         </div>
-
     </div>
 
-
-	<div class="tab-employe">
-
+    <div class="tab-employe">
         <table class="table">
             <thead>
                 <tr>
-                    <th>N</th>
+                    <th>N°</th>
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>N Securite Sociale</th>
                     <th>Fonction</th>
                     <th>Option</th>
-                 
                 </tr>
             </thead>
             <tbody>
-               
+                @if (employees == null)
+                {
                     <tr>
-                        <td class="a">N</td>
-                        <td class="a">Nom</td>
-                        <td class="a">Prenom</td>
-                        <td class="a">N Securite</td>
-                        <td class="a">Fonction</td>
-                        <td>
-                            <button class="btn btn-primary" >
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="btn btn-danger">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-
-
-
-
-
+                        <td colspan="6" class="text-center">Loading...</td>
                     </tr>
-                
+                }
+                else if (employees.Count == 0)
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">No employees found.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var employee in employees)
+                    {
+                        <tr>
+                            <td>@employee.EmployeID</td>
+                            <td>@employee.Nom</td>
+                            <td>@employee.Prenom</td>
+                            <td>@employee.NSecuriteSocial</td> 
+                            <td>@employee.FonctionName</td> 
+                            <td>
+                                <button class="btn btn-primary">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button class="btn btn-danger">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
-
         </table>
-
-
-	</div>
-
-
+    </div>
 </div>
+
+    @code {
+     private List<Domains.Model.Employee.Employe> employees;
+      
+
+        protected override async Task OnInitializedAsync()
+        {
+            await LoadEmployees();
+        }
+
+        private async Task LoadEmployees()
+        {
+            try
+            {
+                employees = await EmployeService.GetEmployeesAsync();
+              
+            }
+            catch (Exception ex)
+            {
+            Console.WriteLine("Employees not loaded: " + ex.Message);
+            }
+        }
+
+    }
+

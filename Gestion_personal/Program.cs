@@ -1,14 +1,25 @@
 using Blazored.Modal;
 using Gestion_personal.Components;
+using Implementation.App.Employee;
+using Infrastructures.Storages.EmployeStorages;
 using MudBlazor.Services;
+using Services;
+using Services.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents();
+builder.Services.AddSingleton<IConfiguration>(provider =>
+	new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+
+builder.Services.AddScoped<EmployeStorage>();
 
 
+builder.Services.AddScoped<IEmployeService, EmployeService>();
+builder.Services.AddBlazoredModal();
 
 
 
